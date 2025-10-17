@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - ¡Perdidos en el Cosmos!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0a13; /* Fondo muy oscuro */
+            --primary-color: #6a059b; /* Púrpura cósmico */
+            --secondary-color: #ff527b; /* Rosa neón */
+            --text-color: #e0e0e0; /* Gris claro para texto */
+            --glow-color: #a800ff; /* Resplandor púrpura */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow: hidden; /* Para las estrellas */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative; /* Para las estrellas */
+        }
+
+        /* Efecto de estrellas */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: transparent;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .stars::before {
+            content: '';
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
+                        /* Genera muchas estrellas aleatorias */
+                        /* Puedes ajustar la cantidad de valores para más o menos estrellas */
+                        20px 20px 0px 0px rgba(255,255,255,0.7), 40px 100px 0px 0px rgba(255,255,255,0.9), 60px 20px 0px 0px rgba(255,255,255,0.6), 80px 80px 0px 0px rgba(255,255,255,0.8), 100px 30px 0px 0px rgba(255,255,255,0.7), 120px 90px 0px 0px rgba(255,255,255,0.9), 140px 50px 0px 0px rgba(255,255,255,0.6), 160px 10px 0px 0px rgba(255,255,255,0.8), 180px 70px 0px 0px rgba(255,255,255,0.7), 200px 40px 0px 0px rgba(255,255,255,0.9), 220px 110px 0px 0px rgba(255,255,255,0.6), 240px 60px 0px 0px rgba(255,255,255,0.8), 260px 0px 0px 0px rgba(255,255,255,0.7), 280px 70px 0px 0px rgba(255,255,255,0.9), 300px 20px 0px 0px rgba(255,255,255,0.6), 320px 90px 0px 0px rgba(255,255,255,0.8), 340px 40px 0px 0px rgba(255,255,255,0.7), 360px 100px 0px 0px rgba(255,255,255,0.9), 380px 50px 0px 0px rgba(255,255,255,0.6), 400px 30px 0px 0px rgba(255,255,255,0.8), 420px 80px 0px 0px rgba(255,255,255,0.7), 440px 10px 0px 0px rgba(255,255,255,0.9), 460px 60px 0px 0px rgba(255,255,255,0.6), 480px 110px 0px 0px rgba(255,255,255,0.8), 500px 20px 0px 0px rgba(255,255,255,0.7), 520px 90px 0px 0px rgba(255,255,255,0.9), 540px 40px 0px 0px rgba(255,255,255,0.6), 560px 70px 0px 0px rgba(255,255,255,0.8), 580px 0px 0px 0px rgba(255,255,255,0.7), 600px 100px 0px 0px rgba(255,255,255,0.9), 620px 30px 0px 0px rgba(255,255,255,0.6), 640px 80px 0px 0px rgba(255,255,255,0.8), 660px 50px 0px 0px rgba(255,255,255,0.7), 680px 10px 0px 0px rgba(255,255,255,0.9), 700px 60px 0px 0px rgba(255,255,255,0.6), 720px 110px 0px 0px rgba(255,255,255,0.8), 740px 20px 0px 0px rgba(255,255,255,0.7), 760px 90px 0px 0px rgba(255,255,255,0.9), 780px 40px 0px 0px rgba(255,255,255,0.6), 800px 70px 0px 0px rgba(255,255,255,0.8), 820px 0px 0px 0px rgba(255,255,255,0.7), 840px 100px 0px 0px rgba(255,255,255,0.9), 860px 30px 0px 0px rgba(255,255,255,0.6), 880px 80px 0px 0px rgba(255,255,255,0.8), 900px 50px 0px 0px rgba(255,255,255,0.7), 920px 10px 0px 0px rgba(255,255,255,0.9), 940px 60px 0px 0px rgba(255,255,255,0.6), 960px 110px 0px 0px rgba(255,255,255,0.8), 980px 20px 0px 0px rgba(255,255,255,0.7);
+
+            animation: starfield 60s linear infinite;
+        }
+
+        @keyframes starfield {
+            from { transform: translateY(0); }
+            to { transform: translateY(-2000px); } /* Simula movimiento */
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(13, 10, 19, 0.85); /* Fondo semitransparente */
+            border-radius: 20px;
+            border: 1px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(170, 0, 255, 0.5); /* Sombra brillante */
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5em; /* 404 grande */
+            color: var(--secondary-color);
+            margin-bottom: 0;
+            text-shadow: 0 0 15px var(--glow-color), 0 0 25px var(--glow-color);
+            animation: bounceIn 1s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-top: 10px;
+            text-shadow: 0 0 10px rgba(106, 5, 155, 0.7);
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .cta-buttons a {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .cta-buttons a:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 20px var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .cta-buttons a:nth-child(2) { /* Estilo para el segundo botón */
+            background-color: transparent;
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+            box-shadow: none;
+        }
+
+        .cta-buttons a:nth-child(2):hover {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--secondary-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            p {
+                font-size: 1em;
+            }
+            .container {
+                padding: 25px;
+                margin: 0 20px;
+            }
+            .cta-buttons a {
+                padding: 10px 20px;
+                margin: 5px 0;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="container">
+        <h1>404</h1>
+        <h2>¡Perdidos en el cosmos!</h2>
+        <p>Parece que tu nave espacial se ha desviado de su ruta. La página que buscas no se encuentra en esta galaxia.</p>
+        <div class="cta-buttons">
+            <a href="/">Volver a Tierra (Inicio)</a>
+            <a href="/contacto">Reportar un OVNI (Contacto)</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.9em;">Mientras tanto, ¿has visto nuestra constelación de <a href="/productos" style="color: var(--secondary-color); text-decoration: none; border-bottom: 1px dashed var(--secondary-color);">últimos proyectos</a>?</p>
+    </div>
+</body>
+</html>
