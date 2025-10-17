@@ -29,39 +29,162 @@
             position: relative;
         }
 
-        /* Mismo efecto de estrellas que en la página 404 */
-        .stars {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: transparent;
-            z-index: 0;
-            pointer-events: none;
+        /* --- INICIO DEL CÓDIGO DEL ASTRONAUTA Y ESTRELLAS (ADAPTADO) --- */
+
+        @keyframes snow {
+            0% { opacity: 0; transform: translateY(0px); }
+            20% { opacity: 1; }
+            100% { opacity: 1; transform: translateY(650px); }
         }
 
-        .stars::before {
-            content: '';
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8),
-                        /* Estrellas generadas aleatoriamente */
-                        20px 20px 0px 0px rgba(255,255,255,0.7), 40px 100px 0px 0px rgba(255,255,255,0.9), 60px 20px 0px 0px rgba(255,255,255,0.6), 80px 80px 0px 0px rgba(255,255,255,0.8), 100px 30px 0px 0px rgba(255,255,255,0.7), 120px 90px 0px 0px rgba(255,255,255,0.9), 140px 50px 0px 0px rgba(255,255,255,0.6), 160px 10px 0px 0px rgba(255,255,255,0.8), 180px 70px 0px 0px rgba(255,255,255,0.7), 200px 40px 0px 0px rgba(255,255,255,0.9), 220px 110px 0px 0px rgba(255,255,255,0.6), 240px 60px 0px 0px rgba(255,255,255,0.8), 260px 0px 0px 0px rgba(255,255,255,0.7), 280px 70px 0px 0px rgba(255,255,255,0.9), 300px 20px 0px 0px rgba(255,255,255,0.6), 320px 90px 0px 0px rgba(255,255,255,0.8), 340px 40px 0px 0px rgba(255,255,255,0.7), 360px 100px 0px 0px rgba(255,255,255,0.9), 380px 50px 0px 0px rgba(255,255,255,0.6), 400px 30px 0px 0px rgba(255,255,255,0.8), 420px 80px 0px 0px rgba(255,255,255,0.7), 440px 10px 0px 0px rgba(255,255,255,0.9), 460px 60px 0px 0px rgba(255,255,255,0.6), 480px 110px 0px 0px rgba(255,255,255,0.8), 500px 20px 0px 0px rgba(255,255,255,0.7), 520px 90px 0px 0px rgba(255,255,255,0.9), 540px 40px 0px 0px rgba(255,255,255,0.6), 560px 70px 0px 0px rgba(255,255,255,0.8), 580px 0px 0px 0px rgba(255,255,255,0.7), 600px 100px 0px 0px rgba(255,255,255,0.9), 620px 30px 0px 0px rgba(255,255,255,0.6), 640px 80px 0px 0px rgba(255,255,255,0.8), 660px 50px 0px 0px rgba(255,255,255,0.7), 680px 10px 0px 0px rgba(255,255,255,0.9), 700px 60px 0px 0px rgba(255,255,255,0.6), 720px 110px 0px 0px rgba(255,255,255,0.8), 740px 20px 0px 0px rgba(255,255,255,0.7), 760px 90px 0px 0px rgba(255,255,255,0.9), 780px 40px 0px 0px rgba(255,255,255,0.6), 800px 70px 0px 0px rgba(255,255,255,0.8), 820px 0px 0px 0px rgba(255,255,255,0.7), 840px 100px 0px 0px rgba(255,255,255,0.9), 860px 30px 0px 0px rgba(255,255,255,0.6), 880px 80px 0px 0px rgba(255,255,255,0.8), 900px 50px 0px 0px rgba(255,255,255,0.7), 920px 10px 0px 0px rgba(255,255,255,0.9), 940px 60px 0px 0px rgba(255,255,255,0.6), 960px 110px 0px 0px rgba(255,255,255,0.8), 980px 20px 0px 0px rgba(255,255,255,0.7);
-            animation: starfield 120s linear infinite;
+        @keyframes astronaut {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        @keyframes starfield {
-            from { transform: translateY(0); }
-            to { transform: translateY(-2000px); }
+        .box-of-star1, .box-of-star2, .box-of-star3, .box-of-star4 {
+            width: 100%;
+            position: absolute;
+            z-index: 0; /* Detrás de todo */
+            left: 0;
+            top: 0;
+            transform: translateY(0px);
+            height: 700px;
         }
+
+        .box-of-star1 { animation: snow 10s linear infinite; }
+        .box-of-star2 { animation: snow 10s -2.5s linear infinite; }
+        .box-of-star3 { animation: snow 10s -4s linear infinite; }
+        .box-of-star4 { animation: snow 10s -5.5s linear infinite; }
+
+        .star {
+            width: 3px; height: 3px; border-radius: 50%;
+            background-color: #FFF; position: absolute;
+            z-index: 10; opacity: 0.7;
+        }
+        .star:before {
+            content: ""; width: 6px; height: 6px; border-radius: 50%;
+            background-color: #FFF; position: absolute; z-index: 10;
+            top: 80px; left: 70px; opacity: .7;
+        }
+        .star:after {
+            content: ""; width: 8px; height: 8px; border-radius: 50%;
+            background-color: #FFF; position: absolute; z-index: 10;
+            top: 8px; left: 170px; opacity: .9;
+        }
+
+        .star-position1 { top: 30px; left: 20px; }
+        .star-position2 { top: 110px; left: 250px; }
+        .star-position3 { top: 60px; left: 570px; }
+        .star-position4 { top: 120px; left: 900px; }
+        .star-position5 { top: 20px; left: 1120px; }
+        .star-position6 { top: 90px; left: 1280px; }
+        .star-position7 { top: 30px; left: 1480px; }
+
+        .astronaut {
+            width: 250px; height: 300px;
+            position: absolute; z-index: 1; /* Detrás del contenido, delante de las estrellas */
+            top: calc(50% - 150px);
+            left: calc(50% - 125px);
+            /* Animación combinada: rota y flota */
+            animation: float 4s ease-in-out infinite, astronaut 8s linear infinite;
+        }
+
+        .schoolbag {
+            width: 100px; height: 150px; position: absolute;
+            z-index: 1; top: calc(50% - 75px); left: calc(50% - 50px);
+            background-color: var(--primary-color); /* Color adaptado */
+            border-radius: 50px 50px 0 0 / 30px 30px 0 0;
+            box-shadow: 0 0 15px var(--glow-color); /* Efecto neón */
+        }
+
+        .head {
+            width: 97px; height: 80px; position: absolute; z-index: 3;
+            background: -webkit-linear-gradient(left, #e3e8eb 0%, #e3e8eb 50%, #fbfdfa 50%, #fbfdfa 100%);
+            border-radius: 50%; top: 34px; left: calc(50% - 47.5px);
+        }
+        .head:after { /* Visor */
+            content: ""; width: 60px; height: 50px; position: absolute;
+            top: calc(50% - 25px); left: calc(50% - 30px);
+            /* Visor adaptado a los colores del tema */
+            background: linear-gradient(to top, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 15px;
+        }
+        .head:before {
+            content: ""; width: 12px; height: 25px; position: absolute;
+            top: calc(50% - 12.5px); left: -4px;
+            background-color: #618095; border-radius: 5px;
+            box-shadow: 92px 0px 0px #618095;
+        }
+
+        .body {
+            width: 85px; height: 100px; position: absolute; z-index: 2;
+            background-color: #fffbff; border-radius: 40px / 20px;
+            top: 105px; left: calc(50% - 41px);
+            background: -webkit-linear-gradient(left, #e3e8eb 0%, #e3e8eb 50%, #fbfdfa 50%, #fbfdfa 100%);
+        }
+        
+        .panel {
+            width: 60px; height: 40px; position: absolute;
+            top: 20px; left: calc(50% - 30px);
+            background-color: #b7cceb;
+        }
+        .panel:before {
+            content: ""; width: 30px; height: 5px; position: absolute;
+            top: 9px; left: 7px; background-color: var(--secondary-color); /* Color adaptado */
+            box-shadow: 0px 9px 0px var(--secondary-color), 0px 18px 0px var(--secondary-color);
+        }
+        .panel:after {
+            content: ""; width: 8px; height: 8px; position: absolute;
+            top: 9px; right: 7px; background-color: #fbfdfa; border-radius: 50%;
+            box-shadow: 0px 14px 0px 2px #fbfdfa;
+        }
+
+        .arm { width: 80px; height: 30px; position: absolute; top: 121px; z-index: 2; }
+        .arm-left { left: 30px; background-color: #e3e8eb; border-radius: 0 0 0 39px; }
+        .arm-right { right: 30px; background-color: #fbfdfa; border-radius: 0 0 39px 0; }
+        .arm-left:before, .arm-right:before {
+            content: ""; width: 30px; height: 70px; position: absolute; top: -40px;
+        }
+        .arm-left:before {
+            border-radius: 50px 50px 0px 120px / 50px 50px 0 110px;
+            left: 0; background-color: #e3e8eb;
+        }
+        .arm-right:before {
+            border-radius: 50px 50px 120px 0 / 50px 50px 110px 0;
+            right: 0; background-color: #fbfdfa;
+        }
+        .arm-left:after, .arm-right:after {
+            content: ""; width: 30px; height: 10px; position: absolute; top: -24px;
+        }
+        .arm-left:after { background-color: #6e91a4; left: 0; }
+        .arm-right:after { right: 0; background-color: #b6d2e0; }
+
+        .leg { width: 30px; height: 40px; position: absolute; z-index: 2; bottom: 70px; }
+        .leg-left { left: 76px; background-color: #e3e8eb; transform: rotate(20deg); }
+        .leg-right { right: 73px; background-color: #fbfdfa; transform: rotate(-20deg); }
+        .leg-left:before, .leg-right:before {
+            content: ""; width: 50px; height: 25px; position: absolute; bottom: -26px;
+        }
+        .leg-left:before {
+            left: -20px; background-color: #e3e8eb; border-radius: 30px 0 0 0;
+            border-bottom: 10px solid var(--primary-color); /* Color adaptado */
+        }
+        .leg-right:before {
+            right: -20px; background-color: #fbfdfa; border-radius: 0 30px 0 0;
+            border-bottom: 10px solid var(--secondary-color); /* Color adaptado */
+        }
+
+        /* --- FIN DEL CÓDIGO DEL ASTRONAUTA --- */
 
         .container {
             position: relative;
-            z-index: 1;
+            z-index: 2; /* Encima del astronauta y las estrellas */
             max-width: 900px;
             width: 90%;
             padding: 40px;
@@ -77,49 +200,22 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        .header {
-            margin-bottom: 30px;
-        }
-
+        .header { margin-bottom: 30px; }
         .header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.8em;
-            color: var(--secondary-color);
-            margin: 0;
+            font-family: 'Orbitron', sans-serif; font-size: 2.8em;
+            color: var(--secondary-color); margin: 0;
             text-shadow: 0 0 15px var(--secondary-color);
         }
-
         .header h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5em;
-            color: var(--text-color);
-            margin: 10px 0 0 0;
-            font-weight: 400;
+            font-family: 'Montserrat', sans-serif; font-size: 1.5em;
+            color: var(--text-color); margin: 10px 0 0 0; font-weight: 400;
         }
 
-        .rocket-art {
-            font-family: monospace;
-            color: var(--primary-color);
-            font-size: 14px;
-            line-height: 1;
-            margin: 20px 0;
-            text-shadow: 0 0 10px var(--glow-color);
-            animation: float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
+        .navigation-console { margin-top: 20px; }
         .navigation-console h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8em;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            margin-bottom: 25px;
-            display: inline-block;
+            font-family: 'Orbitron', sans-serif; font-size: 1.8em;
+            color: var(--primary-color); border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px; margin-bottom: 25px; display: inline-block;
         }
 
         .nav-grid {
@@ -129,61 +225,33 @@
         }
 
         .nav-button {
-            background: transparent;
-            border: 2px solid var(--primary-color);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2em;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background: transparent; border: 2px solid var(--primary-color);
+            color: var(--text-color); padding: 20px; border-radius: 10px;
+            text-decoration: none; font-family: 'Orbitron', sans-serif;
+            font-size: 1.2em; transition: all 0.3s ease;
+            position: relative; overflow: hidden;
         }
-
         .nav-button:hover {
-            background: var(--primary-color);
-            color: white;
+            background: var(--primary-color); color: white;
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(106, 5, 155, 0.4);
         }
-
         .nav-button::before {
-            content: '>';
-            position: absolute;
-            left: 15px;
-            opacity: 0.5;
+            content: '>'; position: absolute; left: 15px; opacity: 0.5;
             transition: all 0.3s ease;
         }
-
         .nav-button:hover::before {
-            transform: translateX(5px);
-            opacity: 1;
+            transform: translateX(5px); opacity: 1;
             color: var(--secondary-color);
         }
 
-        footer {
-            margin-top: 40px;
-            font-size: 0.9em;
-        }
-
+        footer { margin-top: 40px; font-size: 0.9em; }
         .social-links a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            color: var(--secondary-color); text-decoration: none;
+            margin: 0 15px; font-weight: bold; transition: all 0.3s ease;
         }
-
-        .social-links a:hover {
-            text-shadow: 0 0 10px var(--secondary-color);
-        }
-
-        .copyright {
-            margin-top: 15px;
-            color: rgba(224, 224, 224, 0.5);
-        }
+        .social-links a:hover { text-shadow: 0 0 10px var(--secondary-color); }
+        .copyright { margin-top: 15px; color: rgba(224, 224, 224, 0.5); }
 
         @media (max-width: 768px) {
             .header h1 { font-size: 2em; }
@@ -191,27 +259,32 @@
             .navigation-console h3 { font-size: 1.5em; }
             .nav-grid { grid-template-columns: 1fr; }
             .container { padding: 25px; }
+            .astronaut { transform: scale(0.8); } /* Hacemos el astronauta más pequeño en móviles */
         }
     </style>
 </head>
 <body>
-    <div class="stars"></div>
+    <div class="box-of-star1"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+    <div class="box-of-star2"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+    <div class="box-of-star3"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+    <div class="box-of-star4"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+
+    <div class="astronaut">
+        <div class="schoolbag"></div>
+        <div class="head"></div>
+        <div class="body">
+            <div class="panel"></div>
+        </div>
+        <div class="arm arm-left"></div>
+        <div class="arm arm-right"></div>
+        <div class="leg leg-left"></div>
+        <div class="leg leg-right"></div>
+    </div>
 
     <div class="container">
         <header class="header">
             <h1>[Tu Nombre]</h1>
             <h2>[Tu Lema o Profesión, ej: Navegante de Código y Diseño]</h2>
-            <pre class="rocket-art">
-     .
-    / \
-   / _ \
-  |.o '.|
-  |'._.'|
-  |     |
-,'|  |  |`.
-/  |  |  |  \
-|,-'--|--'-.|
-            </pre>
         </header>
 
         <nav class="navigation-console">
