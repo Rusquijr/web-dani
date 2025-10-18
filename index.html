@@ -12,49 +12,54 @@
             --secondary-color: #ff527b;
             --text-color: #e0e0e0;
             --glow-color: #a800ff;
+            --header-height: 70px; /* Variable para la altura del header */
+        }
+
+        /* --- ESTILOS GENERALES Y RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Montserrat', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
+            overflow-x: hidden; /* Previene scroll horizontal */
             position: relative;
         }
 
-        /* --- INICIO DEL CÓDIGO DEL ASTRONAUTA Y ESTRELLAS (ADAPTADO) --- */
+        /* --- INICIO DEL CÓDIGO DEL ASTRONAUTA Y ESTRELLAS (SIN CAMBIOS) --- */
 
         @keyframes snow {
             0% { opacity: 0; transform: translateY(0px); }
             20% { opacity: 1; }
-            100% { opacity: 1; transform: translateY(650px); }
+            100% { opacity: 1; transform: translateY(100vh); } /* Ajustado a la altura de la pantalla */
         }
-
         @keyframes astronaut {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        .stars-background {
+            position: fixed; /* Fijo para que no se mueva con el scroll */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Detrás de todo */
         }
 
         .box-of-star1, .box-of-star2, .box-of-star3, .box-of-star4 {
-            width: 100%;
-            position: absolute;
-            z-index: 0; /* Detrás de todo */
-            left: 0;
-            top: 0;
-            transform: translateY(0px);
-            height: 700px;
+            width: 100%; position: absolute; z-index: 0;
+            left: 0; top: -700px; /* Inician fuera de la pantalla */
+            height: 100vh;
         }
 
         .box-of-star1 { animation: snow 10s linear infinite; }
@@ -64,8 +69,8 @@
 
         .star {
             width: 3px; height: 3px; border-radius: 50%;
-            background-color: #FFF; position: absolute;
-            z-index: 10; opacity: 0.7;
+            background-color: #FFF; position: absolute; z-index: 10;
+            opacity: 0.7;
         }
         .star:before {
             content: ""; width: 6px; height: 6px; border-radius: 50%;
@@ -78,40 +83,38 @@
             top: 8px; left: 170px; opacity: .9;
         }
 
-        .star-position1 { top: 30px; left: 20px; }
-        .star-position2 { top: 110px; left: 250px; }
-        .star-position3 { top: 60px; left: 570px; }
-        .star-position4 { top: 120px; left: 900px; }
-        .star-position5 { top: 20px; left: 1120px; }
-        .star-position6 { top: 90px; left: 1280px; }
-        .star-position7 { top: 30px; left: 1480px; }
+        .star-position1 { top: 30px; left: 10%; }
+        .star-position2 { top: 110px; left: 25%; }
+        .star-position3 { top: 60px; left: 47%; }
+        .star-position4 { top: 120px; left: 60%; }
+        .star-position5 { top: 20px; left: 72%; }
+        .star-position6 { top: 90px; left: 88%; }
+        .star-position7 { top: 30px; left: 95%; }
 
         .astronaut {
             width: 250px; height: 300px;
-            position: absolute; z-index: 1; /* Detrás del contenido, delante de las estrellas */
+            position: fixed; /* Fijo para que flote sobre el contenido */
+            z-index: 1;
             top: calc(50% - 150px);
             left: calc(50% - 125px);
-            /* Animación combinada: rota y flota */
-            animation: float 4s ease-in-out infinite, astronaut 8s linear infinite;
+            animation: float 5s ease-in-out infinite, astronaut 10s linear infinite;
+            pointer-events: none; /* Para que no interfiera con el clic */
         }
-
         .schoolbag {
             width: 100px; height: 150px; position: absolute;
             z-index: 1; top: calc(50% - 75px); left: calc(50% - 50px);
-            background-color: var(--primary-color); /* Color adaptado */
+            background-color: var(--primary-color);
             border-radius: 50px 50px 0 0 / 30px 30px 0 0;
-            box-shadow: 0 0 15px var(--glow-color); /* Efecto neón */
+            box-shadow: 0 0 15px var(--glow-color);
         }
-
         .head {
             width: 97px; height: 80px; position: absolute; z-index: 3;
             background: -webkit-linear-gradient(left, #e3e8eb 0%, #e3e8eb 50%, #fbfdfa 50%, #fbfdfa 100%);
             border-radius: 50%; top: 34px; left: calc(50% - 47.5px);
         }
-        .head:after { /* Visor */
+        .head:after {
             content: ""; width: 60px; height: 50px; position: absolute;
             top: calc(50% - 25px); left: calc(50% - 30px);
-            /* Visor adaptado a los colores del tema */
             background: linear-gradient(to top, var(--primary-color) 0%, var(--secondary-color) 100%);
             border-radius: 15px;
         }
@@ -121,14 +124,12 @@
             background-color: #618095; border-radius: 5px;
             box-shadow: 92px 0px 0px #618095;
         }
-
         .body {
             width: 85px; height: 100px; position: absolute; z-index: 2;
             background-color: #fffbff; border-radius: 40px / 20px;
             top: 105px; left: calc(50% - 41px);
             background: -webkit-linear-gradient(left, #e3e8eb 0%, #e3e8eb 50%, #fbfdfa 50%, #fbfdfa 100%);
         }
-        
         .panel {
             width: 60px; height: 40px; position: absolute;
             top: 20px; left: calc(50% - 30px);
@@ -136,7 +137,7 @@
         }
         .panel:before {
             content: ""; width: 30px; height: 5px; position: absolute;
-            top: 9px; left: 7px; background-color: var(--secondary-color); /* Color adaptado */
+            top: 9px; left: 7px; background-color: var(--secondary-color);
             box-shadow: 0px 9px 0px var(--secondary-color), 0px 18px 0px var(--secondary-color);
         }
         .panel:after {
@@ -144,7 +145,6 @@
             top: 9px; right: 7px; background-color: #fbfdfa; border-radius: 50%;
             box-shadow: 0px 14px 0px 2px #fbfdfa;
         }
-
         .arm { width: 80px; height: 30px; position: absolute; top: 121px; z-index: 2; }
         .arm-left { left: 30px; background-color: #e3e8eb; border-radius: 0 0 0 39px; }
         .arm-right { right: 30px; background-color: #fbfdfa; border-radius: 0 0 39px 0; }
@@ -164,7 +164,6 @@
         }
         .arm-left:after { background-color: #6e91a4; left: 0; }
         .arm-right:after { right: 0; background-color: #b6d2e0; }
-
         .leg { width: 30px; height: 40px; position: absolute; z-index: 2; bottom: 70px; }
         .leg-left { left: 76px; background-color: #e3e8eb; transform: rotate(20deg); }
         .leg-right { right: 73px; background-color: #fbfdfa; transform: rotate(-20deg); }
@@ -173,140 +172,306 @@
         }
         .leg-left:before {
             left: -20px; background-color: #e3e8eb; border-radius: 30px 0 0 0;
-            border-bottom: 10px solid var(--primary-color); /* Color adaptado */
+            border-bottom: 10px solid var(--primary-color);
         }
         .leg-right:before {
             right: -20px; background-color: #fbfdfa; border-radius: 0 30px 0 0;
-            border-bottom: 10px solid var(--secondary-color); /* Color adaptado */
+            border-bottom: 10px solid var(--secondary-color);
         }
 
-        /* --- FIN DEL CÓDIGO DEL ASTRONAUTA --- */
+        /* --- FIN CÓDIGO ASTRONAUTA --- */
 
-        .container {
+        /* --- NUEVA BARRA DE NAVEGACIÓN SUPERIOR --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            height: var(--header-height);
+            background: rgba(13, 10, 19, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(106, 5, 155, 0.3);
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .logo span { color: var(--secondary-color); }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+        .nav-links li { margin-left: 35px; }
+        .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1em;
+            padding: 5px 0;
             position: relative;
-            z-index: 2; /* Encima del astronauta y las estrellas */
-            max-width: 900px;
-            width: 90%;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* --- MENÚ HAMBURGUESA PARA MÓVIL --- */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle .bar {
+            width: 25px;
+            height: 3px;
+            background-color: var(--text-color);
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+
+        /* --- ESTRUCTURA DE CONTENIDO PRINCIPAL --- */
+        main { z-index: 2; position: relative; }
+
+        section {
+            padding: 120px 8%; /* Espaciado superior para no quedar debajo del header */
+            min-height: 100vh; /* Cada sección ocupa al menos la altura de la pantalla */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Sección de Inicio (Hero) */
+        #inicio {
+            text-align: center;
+            align-items: center;
+        }
+
+        .hero-content {
+            background: rgba(13, 10, 19, 0.6);
             padding: 40px;
-            background: rgba(13, 10, 19, 0.88);
             border-radius: 20px;
             border: 1px solid var(--primary-color);
-            box-shadow: 0 0 35px rgba(170, 0, 255, 0.5);
+            box-shadow: 0 0 35px rgba(170, 0, 255, 0.3);
             animation: fadeIn 1.5s ease-out;
+            max-width: 800px;
         }
-
+        
+        .hero-content h1 {
+            font-family: 'Orbitron', sans-serif; font-size: 3.5em;
+            color: var(--secondary-color); margin: 0;
+            text-shadow: 0 0 15px var(--secondary-color);
+        }
+        .hero-content h2 {
+            font-family: 'Montserrat', sans-serif; font-size: 1.8em;
+            color: var(--text-color); margin: 10px 0 0 0; font-weight: 400;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
 
-        .header { margin-bottom: 30px; }
-        .header h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 2.8em;
-            color: var(--secondary-color); margin: 0;
-            text-shadow: 0 0 15px var(--secondary-color);
-        }
-        .header h2 {
-            font-family: 'Montserrat', sans-serif; font-size: 1.5em;
-            color: var(--text-color); margin: 10px 0 0 0; font-weight: 400;
-        }
-
-        .navigation-console { margin-top: 20px; }
-        .navigation-console h3 {
-            font-family: 'Orbitron', sans-serif; font-size: 1.8em;
-            color: var(--primary-color); border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px; margin-bottom: 25px; display: inline-block;
+        /* Estilos para las otras secciones */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 50px;
+            text-shadow: 0 0 10px var(--glow-color);
         }
 
-        .nav-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .section-content {
+            font-size: 1.1em;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: justify;
         }
 
-        .nav-button {
-            background: transparent; border: 2px solid var(--primary-color);
-            color: var(--text-color); padding: 20px; border-radius: 10px;
-            text-decoration: none; font-family: 'Orbitron', sans-serif;
-            font-size: 1.2em; transition: all 0.3s ease;
-            position: relative; overflow: hidden;
-        }
-        .nav-button:hover {
-            background: var(--primary-color); color: white;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(106, 5, 155, 0.4);
-        }
-        .nav-button::before {
-            content: '>'; position: absolute; left: 15px; opacity: 0.5;
-            transition: all 0.3s ease;
-        }
-        .nav-button:hover::before {
-            transform: translateX(5px); opacity: 1;
-            color: var(--secondary-color);
-        }
 
-        footer { margin-top: 40px; font-size: 0.9em; }
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #08060c;
+            position: relative;
+            z-index: 5;
+        }
         .social-links a {
             color: var(--secondary-color); text-decoration: none;
             margin: 0 15px; font-weight: bold; transition: all 0.3s ease;
+            font-size: 1.2em;
         }
         .social-links a:hover { text-shadow: 0 0 10px var(--secondary-color); }
-        .copyright { margin-top: 15px; color: rgba(224, 224, 224, 0.5); }
+        .copyright { margin-top: 20px; color: rgba(224, 224, 224, 0.5); }
+
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .hero-content h1 { font-size: 2.5em; }
+            .hero-content h2 { font-size: 1.4em; }
+            .astronaut { transform: scale(0.8); }
+        }
 
         @media (max-width: 768px) {
-            .header h1 { font-size: 2em; }
-            .header h2 { font-size: 1.2em; }
-            .navigation-console h3 { font-size: 1.5em; }
-            .nav-grid { grid-template-columns: 1fr; }
-            .container { padding: 25px; }
-            .astronaut { transform: scale(0.8); } /* Hacemos el astronauta más pequeño en móviles */
+            .menu-toggle { display: flex; }
+            .nav-links {
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background: rgba(13, 10, 19, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: center;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+            }
+            .nav-links.active {
+                max-height: 500px; /* Suficiente para todos los links */
+                padding: 20px 0;
+            }
+            .nav-links li {
+                margin: 15px 0;
+            }
+            .hero-content { padding: 25px; }
+            .hero-content h1 { font-size: 2em; }
+            .hero-content h2 { font-size: 1.2em; }
+            section { padding: 100px 5%; }
+            .section-title { font-size: 2.2em; }
         }
+
     </style>
 </head>
 <body>
-    <div class="box-of-star1"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
-    <div class="box-of-star2"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
-    <div class="box-of-star3"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
-    <div class="box-of-star4"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
 
+    <div class="stars-background">
+        <div class="box-of-star1"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+        <div class="box-of-star2"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+        <div class="box-of-star3"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+        <div class="box-of-star4"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
+    </div>
     <div class="astronaut">
-        <div class="schoolbag"></div>
-        <div class="head"></div>
-        <div class="body">
-            <div class="panel"></div>
-        </div>
-        <div class="arm arm-left"></div>
-        <div class="arm arm-right"></div>
-        <div class="leg leg-left"></div>
-        <div class="leg leg-right"></div>
+        <div class="schoolbag"></div><div class="head"></div><div class="body"><div class="panel"></div></div><div class="arm arm-left"></div><div class="arm arm-right"></div><div class="leg leg-left"></div><div class="leg leg-right"></div>
     </div>
 
-    <div class="container">
-        <header class="header">
-            <h1>Daniel Rosquellas Cañete</h1>
-            <h2>Administrador de sistemas</h2>
-        </header>
-
-        <nav class="navigation-console">
-            <h3>Consola de Navegación</h3>
-            <div class="nav-grid">
-                <a href="/sobre-mi.html" class="nav-button">Log de Capitán (Sobre Mí)</a>
-                <a href="/proyectos.html" class="nav-button">Constelación de Proyectos</a>
-                <a href="/cv.html" class="nav-button">Credenciales de Vuelo (CV)</a>
-                <a href="/habilidades.html" class="nav-button">Arsenal Tecnológico</a>
-                <a href="/blog.html" class="nav-button">Diario de Abordo (Blog)</a>
-                <a href="/contacto.html" class="nav-button">Contactar con la Estación</a>
-            </div>
+    <header class="main-header">
+        <a href="#inicio" class="logo">Daniel<span>R.</span></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#sobre-mi">Sobre Mí</a></li>
+                <li><a href="#proyectos">Proyectos</a></li>
+                <li><a href="#cv">CV</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
         </nav>
+        <div class="menu-toggle">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
 
-        <footer>
-            <div class="social-links">
-                <a href="https://github.com/tu-usuario" target="_blank">GitHub</a>
-                <a href="https://linkedin.com/in/tu-usuario" target="_blank">LinkedIn</a>
-                <a href="https://twitter.com/tu-usuario" target="_blank">X / Twitter</a>
+    <main>
+        <section id="inicio">
+            <div class="hero-content">
+                <h1>Daniel Rosquellas Cañete</h1>
+                <h2>Administrador de sistemas</h2>
             </div>
-            <p class="copyright">© 2025 Daniel Rosquellas Cañete - Misión en progreso.</p>
-        </footer>
-    </div>
+        </section>
+
+        <section id="sobre-mi">
+            <h2 class="section-title">Log de Capitán (Sobre Mí)</h2>
+            <div class="section-content">
+                <p>Aquí puedes escribir una descripción detallada sobre ti. Habla de tu pasión por la tecnología, tu experiencia como administrador de sistemas, tus objetivos profesionales y quizás algo personal que te conecte con la temática espacial de la web. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
+            </div>
+        </section>
+
+        <section id="proyectos">
+            <h2 class="section-title">Constelación de Proyectos</h2>
+            <div class="section-content">
+                <p>Este es el espacio para mostrar tus proyectos más importantes. Puedes crear una cuadrícula o una lista con descripciones breves de cada uno, enlaces a GitHub o a las demos en vivo. Por ahora, es un texto de ejemplo. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</p>
+            </div>
+        </section>
+        
+        <section id="cv">
+             <h2 class="section-title">Credenciales de Vuelo (CV)</h2>
+             <div class="section-content">
+                 <p>En esta área, puedes enlazar a tu CV en formato PDF o detallar tu experiencia laboral y formación académica directamente aquí. Es tu historial de misiones y entrenamiento. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor.</p>
+             </div>
+        </section>
+
+        <section id="habilidades">
+            <h2 class="section-title">Arsenal Tecnológico</h2>
+             <div class="section-content"><p>Detalla aquí las tecnologías que dominas: sistemas operativos, lenguajes de scripting, herramientas de monitorización, cloud, etc.</p></div>
+        </section>
+        
+        <section id="blog">
+             <h2 class="section-title">Diario de Abordo (Blog)</h2>
+             <div class="section-content"><p>Si tienes un blog, este es el lugar para enlazar a tus últimas entradas o reflexiones sobre el mundo de la tecnología.</p></div>
+        </section>
+        
+        <section id="contacto">
+             <h2 class="section-title">Contactar con la Estación</h2>
+             <div class="section-content"><p>Proporciona tus datos de contacto o un formulario para que los visitantes puedan comunicarse contigo.</p></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/tu-usuario" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/tu-usuario" target="_blank">LinkedIn</a>
+            <a href="https://twitter.com/tu-usuario" target="_blank">X / Twitter</a>
+        </div>
+        <p class="copyright">© 2025 Daniel Rosquellas Cañete - Misión en progreso.</p>
+    </footer>
+
+    <script>
+        // Script para el menú de hamburguesa
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Opcional: Cerrar el menú al hacer clic en un enlace (para móviles)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
