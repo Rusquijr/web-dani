@@ -31,34 +31,35 @@
             position: relative;
         }
 
-        /* --- INICIO DEL CÓDIGO DEL ASTRONAUTA Y ESTRELLAS (SIN CAMBIOS) --- */
+        /* --- INICIO DEL CÓDIGO DEL ASTRONAUTA Y ESTRELLAS (ADAPTADO) --- */
 
         @keyframes snow {
             0% { opacity: 0; transform: translateY(0px); }
             20% { opacity: 1; }
-            100% { opacity: 1; transform: translateY(100vh); } /* Ajustado a la altura de la pantalla */
+            100% { opacity: 1; transform: translateY(100vh); }
         }
-        @keyframes astronaut {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes astronaut-float-left { /* Animación para el astronauta izquierdo */
+            0%, 100% { transform: translate(-10px, -10px) rotate(-5deg) scale(0.6); }
+            50% { transform: translate(10px, 10px) rotate(5deg) scale(0.6); }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(-2deg); }
-            50% { transform: translateY(-20px) rotate(3deg); }
+        @keyframes astronaut-float-right { /* Animación para el astronauta derecho */
+            0%, 100% { transform: translate(10px, 10px) rotate(5deg) scale(0.6); }
+            50% { transform: translate(-10px, -10px) rotate(-5deg) scale(0.6); }
         }
 
         .stars-background {
-            position: fixed; /* Fijo para que no se mueva con el scroll */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Detrás de todo */
+            z-index: -1;
+            pointer-events: none;
         }
 
         .box-of-star1, .box-of-star2, .box-of-star3, .box-of-star4 {
-            width: 100%; position: absolute; z-index: 0;
-            left: 0; top: -700px; /* Inician fuera de la pantalla */
+            width: 100%; position: absolute;
+            left: 0; top: -700px;
             height: 100vh;
         }
 
@@ -69,17 +70,17 @@
 
         .star {
             width: 3px; height: 3px; border-radius: 50%;
-            background-color: #FFF; position: absolute; z-index: 10;
+            background-color: #FFF; position: absolute;
             opacity: 0.7;
         }
         .star:before {
             content: ""; width: 6px; height: 6px; border-radius: 50%;
-            background-color: #FFF; position: absolute; z-index: 10;
+            background-color: #FFF; position: absolute;
             top: 80px; left: 70px; opacity: .7;
         }
         .star:after {
             content: ""; width: 8px; height: 8px; border-radius: 50%;
-            background-color: #FFF; position: absolute; z-index: 10;
+            background-color: #FFF; position: absolute;
             top: 8px; left: 170px; opacity: .9;
         }
 
@@ -91,15 +92,28 @@
         .star-position6 { top: 90px; left: 88%; }
         .star-position7 { top: 30px; left: 95%; }
 
+        /* ASTRONAUTAS EN LAS ESQUINAS */
         .astronaut {
             width: 250px; height: 300px;
-            position: fixed; /* Fijo para que flote sobre el contenido */
-            z-index: 1;
-            top: calc(50% - 150px);
-            left: calc(50% - 125px);
-            animation: float 5s ease-in-out infinite, astronaut 10s linear infinite;
-            pointer-events: none; /* Para que no interfiera con el clic */
+            position: fixed;
+            z-index: 0; /* Detrás del contenido */
+            pointer-events: none;
+            opacity: 0.7;
         }
+        .astronaut.top-left {
+            top: 80px;
+            left: -50px;
+            animation: astronaut-float-left 10s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+        .astronaut.bottom-right {
+            bottom: -50px;
+            right: -50px;
+            animation: astronaut-float-right 10s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+
+        /* Partes del astronauta (sin cambios) */
         .schoolbag {
             width: 100px; height: 150px; position: absolute;
             z-index: 1; top: calc(50% - 75px); left: calc(50% - 50px);
@@ -181,7 +195,8 @@
 
         /* --- FIN CÓDIGO ASTRONAUTA --- */
 
-        /* --- NUEVA BARRA DE NAVEGACIÓN SUPERIOR --- */
+
+        /* --- BARRA DE NAVEGACIÓN SUPERIOR --- */
         .main-header {
             position: fixed;
             top: 0;
@@ -257,17 +272,18 @@
         main { z-index: 2; position: relative; }
 
         section {
-            padding: 120px 8%; /* Espaciado superior para no quedar debajo del header */
-            min-height: 100vh; /* Cada sección ocupa al menos la altura de la pantalla */
+            padding: 120px 8%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center; /* Centra el contenido horizontalmente */
+            text-align: center; /* Centra el texto del contenido */
         }
         
         /* Sección de Inicio (Hero) */
         #inicio {
-            text-align: center;
-            align-items: center;
+            justify-content: center;
         }
 
         .hero-content {
@@ -309,9 +325,8 @@
             line-height: 1.7;
             max-width: 900px;
             margin: 0 auto;
-            text-align: justify;
+            text-align: justify; /* Justifica el texto para mejor lectura */
         }
-
 
         /* --- FOOTER --- */
         footer {
@@ -353,7 +368,7 @@
                 transition: max-height 0.5s ease-out;
             }
             .nav-links.active {
-                max-height: 500px; /* Suficiente para todos los links */
+                max-height: 500px;
                 padding: 20px 0;
             }
             .nav-links li {
@@ -364,6 +379,11 @@
             .hero-content h2 { font-size: 1.2em; }
             section { padding: 100px 5%; }
             .section-title { font-size: 2.2em; }
+            
+            /* Ocultamos un astronauta en pantallas muy pequeñas para no sobrecargar */
+            .astronaut.top-left {
+                display: none;
+            }
         }
 
     </style>
@@ -376,7 +396,10 @@
         <div class="box-of-star3"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
         <div class="box-of-star4"><div class="star star-position1"></div><div class="star star-position2"></div><div class="star star-position3"></div><div class="star star-position4"></div><div class="star star-position5"></div><div class="star star-position6"></div><div class="star star-position7"></div></div>
     </div>
-    <div class="astronaut">
+    <div class="astronaut top-left">
+        <div class="schoolbag"></div><div class="head"></div><div class="body"><div class="panel"></div></div><div class="arm arm-left"></div><div class="arm arm-right"></div><div class="leg leg-left"></div><div class="leg leg-right"></div>
+    </div>
+    <div class="astronaut bottom-right">
         <div class="schoolbag"></div><div class="head"></div><div class="body"><div class="panel"></div></div><div class="arm arm-left"></div><div class="arm arm-right"></div><div class="leg leg-left"></div><div class="leg leg-right"></div>
     </div>
 
@@ -408,39 +431,51 @@
         </section>
 
         <section id="sobre-mi">
-            <h2 class="section-title">Log de Capitán (Sobre Mí)</h2>
-            <div class="section-content">
-                <p>Aquí puedes escribir una descripción detallada sobre ti. Habla de tu pasión por la tecnología, tu experiencia como administrador de sistemas, tus objetivos profesionales y quizás algo personal que te conecte con la temática espacial de la web. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
+            <div>
+                <h2 class="section-title">Log de Capitán (Sobre Mí)</h2>
+                <div class="section-content">
+                    <p>Aquí puedes escribir una descripción detallada sobre ti. Habla de tu pasión por la tecnología, tu experiencia como administrador de sistemas, tus objetivos profesionales y quizás algo personal que te conecte con la temática espacial de la web. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.</p>
+                </div>
             </div>
         </section>
 
         <section id="proyectos">
-            <h2 class="section-title">Constelación de Proyectos</h2>
-            <div class="section-content">
-                <p>Este es el espacio para mostrar tus proyectos más importantes. Puedes crear una cuadrícula o una lista con descripciones breves de cada uno, enlaces a GitHub o a las demos en vivo. Por ahora, es un texto de ejemplo. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</p>
+            <div>
+                <h2 class="section-title">Constelación de Proyectos</h2>
+                <div class="section-content">
+                    <p>Este es el espacio para mostrar tus proyectos más importantes. Puedes crear una cuadrícula o una lista con descripciones breves de cada uno, enlaces a GitHub o a las demos en vivo. Por ahora, es un texto de ejemplo. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.</p>
+                </div>
             </div>
         </section>
         
         <section id="cv">
-             <h2 class="section-title">Credenciales de Vuelo (CV)</h2>
-             <div class="section-content">
-                 <p>En esta área, puedes enlazar a tu CV en formato PDF o detallar tu experiencia laboral y formación académica directamente aquí. Es tu historial de misiones y entrenamiento. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor.</p>
-             </div>
+             <div>
+                <h2 class="section-title">Credenciales de Vuelo (CV)</h2>
+                <div class="section-content">
+                    <p>En esta área, puedes enlazar a tu CV en formato PDF o detallar tu experiencia laboral y formación académica directamente aquí. Es tu historial de misiones y entrenamiento. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor.</p>
+                </div>
+            </div>
         </section>
 
         <section id="habilidades">
-            <h2 class="section-title">Arsenal Tecnológico</h2>
-             <div class="section-content"><p>Detalla aquí las tecnologías que dominas: sistemas operativos, lenguajes de scripting, herramientas de monitorización, cloud, etc.</p></div>
+            <div>
+                <h2 class="section-title">Arsenal Tecnológico</h2>
+                <div class="section-content"><p>Detalla aquí las tecnologías que dominas: sistemas operativos, lenguajes de scripting, herramientas de monitorización, cloud, etc.</p></div>
+            </div>
         </section>
         
         <section id="blog">
-             <h2 class="section-title">Diario de Abordo (Blog)</h2>
-             <div class="section-content"><p>Si tienes un blog, este es el lugar para enlazar a tus últimas entradas o reflexiones sobre el mundo de la tecnología.</p></div>
+            <div>
+                <h2 class="section-title">Diario de Abordo (Blog)</h2>
+                <div class="section-content"><p>Si tienes un blog, este es el lugar para enlazar a tus últimas entradas o reflexiones sobre el mundo de la tecnología.</p></div>
+            </div>
         </section>
         
         <section id="contacto">
-             <h2 class="section-title">Contactar con la Estación</h2>
-             <div class="section-content"><p>Proporciona tus datos de contacto o un formulario para que los visitantes puedan comunicarse contigo.</p></div>
+            <div>
+                <h2 class="section-title">Contactar con la Estación</h2>
+                <div class="section-content"><p>Proporciona tus datos de contacto o un formulario para que los visitantes puedan comunicarse contigo.</p></div>
+            </div>
         </section>
 
     </main>
