@@ -435,3 +435,51 @@ body {
     .timeline-item.left, .timeline-item.right { left: 0; }
     .timeline-item.left .timeline-icon, .timeline-item.right .timeline-icon { left: 0; }
 }
+/* ===== ESTILOS DEL EASTER EGG (NIEVE) ===== */
+
+/* 1. El contenedor (nuestro "cielo") */
+#snow-container {
+    position: fixed; /* Fijo en la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Alto completo de la ventana */
+    
+    /* Importante: 'z-index' bajo para que esté DETRÁS de tu web */
+    z-index: -1; 
+    
+    /* Oculto por defecto (el JS lo mostrará) */
+    display: none; 
+    overflow: hidden; /* Evita barras de scroll raras */
+    pointer-events: none; /* Permite hacer clic "a través" de él */
+}
+
+/* 2. El copo de nieve */
+.snowflake {
+    position: absolute;
+    background-color: #FFF;
+    border-radius: 50%;
+    
+    /* Empieza fuera de la pantalla, por arriba */
+    top: -10px; 
+    
+    /* El JS usa 'animation-duration' y 'animation-delay' */
+    /* El JS usa '--random-x' para el movimiento lateral */
+    animation: fall linear forwards;
+}
+
+/* 3. La animación de caída */
+@keyframes fall {
+    from {
+        /* Empieza arriba, sin movimiento lateral */
+        transform: translate(0, 0);
+        opacity: 0.8;
+    }
+    to {
+        /* * Cae hasta el final (110vh) y se mueve lateralmente 
+         * usando la variable --random-x que le da el JS 
+         */
+        transform: translate(var(--random-x), 110vh);
+        opacity: 0.5;
+    }
+}
